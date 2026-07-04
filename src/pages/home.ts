@@ -1,4 +1,4 @@
-import { baseStyle } from '../styles.js'
+import { baseStyle, analyticsScript } from '../styles.js'
 
 export const homePage = /* html */ `<!doctype html>
 <html lang="en">
@@ -66,6 +66,7 @@ export const homePage = /* html */ `<!doctype html>
 
   footer { margin-top: 56px; font-size: 13px; color: #888; }
 </style>
+${analyticsScript}
 </head>
 <body>
   <div class="topbar">

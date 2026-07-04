@@ -1,4 +1,4 @@
-import { baseStyle } from '../styles.js'
+import { baseStyle, analyticsScript } from '../styles.js'
 import type { ApiKey } from '../db/schema.js'
 
 // Minimal HTML escaping for any value that originates from user input
@@ -96,6 +96,7 @@ function shell(title: string, active: string, name: string, inner: string): stri
 <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
 <title>${esc(title)}</title>
 <style>${dashStyle}</style>
+${analyticsScript}
 </head>
 <body>
   <header>

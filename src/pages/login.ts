@@ -1,4 +1,4 @@
-import { baseStyle } from '../styles.js'
+import { baseStyle, analyticsScript } from '../styles.js'
 
 export const loginPage = /* html */ `<!doctype html>
 <html lang="en">
@@ -34,6 +34,7 @@ export const loginPage = /* html */ `<!doctype html>
   button:hover { background: #333; }
   .alt { font-size: 13px; color: #666; margin-top: 20px; text-align: center; }
 </style>
+${analyticsScript}
 </head>
 <body>
   <a class="back muted" href="/">← contactapi</a>

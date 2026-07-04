@@ -1,4 +1,4 @@
-import { baseStyle } from '../styles.js'
+import { baseStyle, analyticsScript } from '../styles.js'
 import { posts, type Post } from '../content/blog.js'
 
 const SITE = 'https://contactapi.dev'
@@ -55,6 +55,7 @@ function layout(opts: { title: string; description: string; canonical: string; b
 <meta name="description" content="${esc(opts.description)}" />
 <link rel="canonical" href="${esc(opts.canonical)}" />
 <style>${baseStyle}${blogStyle}</style>
+${analyticsScript}
 </head>
 <body>
 ${opts.body}

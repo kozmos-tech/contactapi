@@ -1,4 +1,4 @@
-import { baseStyle } from '../styles.js'
+import { baseStyle, analyticsScript } from '../styles.js'
 
 export const signupPage = /* html */ `<!doctype html>
 <html lang="en">
@@ -35,6 +35,7 @@ export const signupPage = /* html */ `<!doctype html>
   .hint { font-size: 12px; color: #999; margin-top: -6px; }
   .alt { font-size: 13px; color: #666; margin-top: 20px; text-align: center; }
 </style>
+${analyticsScript}
 </head>
 <body>
   <a class="back muted" href="/">← contactapi</a>
