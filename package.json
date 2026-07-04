@@ -13,13 +13,17 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@hono/mcp": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@neondatabase/serverless": "^1.1.0",
     "better-auth": "^1.6.23",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.27",
-    "nanoid": "^5.1.16"
+    "nanoid": "^5.1.16",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@better-auth/cli": "^1.4.21",
     "@types/node": "^20.11.17",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.7.1",

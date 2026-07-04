@@ -17,7 +17,9 @@
   → revoke → 401; publishable on `GET` → 403; domain mismatch → 403) into a
   committed test suite.
 - [ ] **`BETTER_AUTH_URL` in production** — set to the deployed origin so cookies
-  and CSRF origin checks are correct.
+  and CSRF origin checks are correct. **Now required for the MCP server**: it's
+  the OAuth issuer and the base of every discovery/token URL, so the OAuth flow
+  breaks if it's unset or wrong in prod.
 
 ## Reference
 - Auth model & error codes: `src/content/llms.ts` (the `/llms.txt` spec).

@@ -37,6 +37,27 @@ There are two kinds of key:
 - `ck_pub_…` — publishable key, for the browser. Can only create contacts and is
   locked to your domains.
 
+## MCP server
+
+AI clients (Claude Desktop, claude.ai custom connectors, Cursor, the MCP
+Inspector) can manage your contacts through an [MCP](https://modelcontextprotocol.io)
+server at:
+
+```
+https://contactapi.dev/mcp
+```
+
+Auth is **OAuth 2.1 with dynamic client registration** — point a client at the
+URL and it discovers the authorization server, registers itself, and sends you to
+log in and approve access; no API key to copy. The server exposes five tools that
+mirror the REST API: `list_contacts`, `get_contact`, `create_contact`
+(upsert-by-email), `update_contact`, and `delete_contact`. Everything is scoped to
+the account you log in as.
+
+The OAuth provider is [Better Auth](https://better-auth.com)'s `mcp` plugin
+([`src/auth.ts`](src/auth.ts)); the tools and endpoint wiring live in
+[`src/mcp/server.ts`](src/mcp/server.ts) and [`src/index.ts`](src/index.ts).
+
 ## Development
 
 Prerequisites: [Vercel CLI](https://vercel.com/docs/cli) installed globally.

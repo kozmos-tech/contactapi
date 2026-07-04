@@ -1,7 +1,16 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { mcp } from 'better-auth/plugins'
 import { db } from './db/client.js'
-import { user, session, account, verification } from './db/auth-schema.js'
+import {
+  user,
+  session,
+  account,
+  verification,
+  oauthApplication,
+  oauthAccessToken,
+  oauthConsent,
+} from './db/auth-schema.js'
 import { newId, type IdPrefix } from './db/ids.js'
 import { mintApiKey } from './api-keys.js'
 
@@ -22,7 +31,9 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, {
     provider: 'pg',
-    schema: { user, session, account, verification },
+    // The mcp plugin (below) reads/writes the three oauth* tables, so they must
+    // be registered here alongside the core auth tables.
+    schema: { user, session, account, verification, oauthApplication, oauthAccessToken, oauthConsent },
   }),
   emailAndPassword: {
     enabled: true,
@@ -34,6 +45,15 @@ export const auth = betterAuth({
       generateId: ({ model }) => newId(ID_PREFIX[model] ?? 'usr'),
     },
   },
+  plugins: [
+    // Makes contactapi an OAuth 2.1 authorization server for MCP clients:
+    // dynamic client registration, /authorize, /token, all under /api/auth/*.
+    // MCP clients (Claude Desktop, claude.ai connectors, MCP Inspector) discover
+    // it via the /.well-known routes wired in index.ts and hit the /mcp endpoint
+    // with the access token. Consent reuses the dashboard session; an unauthed
+    // user is sent to the existing login page.
+    mcp({ loginPage: '/login' }),
+  ],
   databaseHooks: {
     user: {
       create: {

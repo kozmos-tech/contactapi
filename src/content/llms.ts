@@ -161,6 +161,24 @@ Response \`200 OK\`:
 { "id": "con_a1b2", "deleted": true }
 \`\`\`
 
+## MCP server
+
+An MCP (Model Context Protocol) server lets AI clients — Claude Desktop, claude.ai custom connectors, Cursor, the MCP Inspector — manage contacts as tools. The endpoint is:
+
+\`\`\`
+https://contactapi.dev/mcp
+\`\`\`
+
+Authentication is OAuth 2.1 with dynamic client registration, not an API key. Point the client at the URL; it discovers the authorization server at \`/.well-known/oauth-authorization-server\`, registers itself, and sends you to log in and approve access. All tools act on the account you log in as.
+
+Tools (they mirror the REST endpoints above):
+
+- \`list_contacts\` — list your contacts, newest first. Params: \`page\`, \`page_size\`.
+- \`get_contact\` — fetch one contact. Params: \`id\`.
+- \`create_contact\` — create or upsert-by-email. Params: \`email\`, \`fields\` (arbitrary JSON).
+- \`update_contact\` — partial update, merged into existing fields. Params: \`id\`, \`email\`, \`fields\`.
+- \`delete_contact\` — delete one contact. Params: \`id\`.
+
 ## Errors
 
 Errors return a non-2xx status and a JSON body with an \`error\` object:
