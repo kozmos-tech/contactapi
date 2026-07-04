@@ -6,6 +6,7 @@ import { loginPage } from './pages/login.js'
 import { signupPage } from './pages/signup.js'
 import { blogIndexPage, renderPost } from './pages/blog.js'
 import { llmsTxt } from './content/llms.js'
+import { sitemapXml, robotsTxt } from './content/sitemap.js'
 import { contactsRoutes } from './routes/contacts.js'
 import { dashboardRoutes } from './routes/dashboard.js'
 import { rateLimit } from './middleware/ratelimit.js'
@@ -37,6 +38,8 @@ app.get('/blog/:slug', (c) => {
   return html ? c.html(html) : c.notFound()
 })
 app.get('/llms.txt', (c) => c.text(llmsTxt))
+app.get('/sitemap.xml', (c) => c.body(sitemapXml, 200, { 'Content-Type': 'application/xml; charset=utf-8' }))
+app.get('/robots.txt', (c) => c.text(robotsTxt))
 
 // Throttle auth (signup/login/sign-out) per IP to blunt credential brute-force.
 app.use('/api/auth/*', rateLimit({ bucket: 'auth', windowMs: 60_000, max: 20 }))
