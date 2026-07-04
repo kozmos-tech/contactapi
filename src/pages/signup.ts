@@ -1,11 +1,11 @@
 import { baseStyle } from '../styles.js'
 
-export const loginPage = /* html */ `<!doctype html>
+export const signupPage = /* html */ `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Log in to contactapi</title>
+<title>Sign up for contactapi</title>
 <style>
   ${baseStyle}
   body { max-width: 360px; padding-top: 96px; }
@@ -31,24 +31,28 @@ export const loginPage = /* html */ `<!doctype html>
     margin-top: 4px;
   }
   button:hover { background: #333; }
+  .hint { font-size: 12px; color: #999; margin-top: -6px; }
   .alt { font-size: 13px; color: #666; margin-top: 20px; text-align: center; }
 </style>
 </head>
 <body>
   <a class="back muted" href="/">← contactapi</a>
-  <h1>Log in</h1>
-  <p class="muted" style="font-size:14px">Log in to get your API key.</p>
-  <form id="loginForm">
+  <h1>Sign up</h1>
+  <p class="muted" style="font-size:14px">Create an account to get your API key.</p>
+  <form id="signupForm">
+    <label for="name">Name</label>
+    <input id="name" type="text" required placeholder="Ada Lovelace" autocomplete="name" />
     <label for="email">Email</label>
     <input id="email" type="email" required placeholder="you@example.com" autocomplete="email" />
     <label for="password">Password</label>
-    <input id="password" type="password" required placeholder="••••••••" autocomplete="current-password" />
-    <button type="submit">Log in</button>
+    <input id="password" type="password" required minlength="8" placeholder="••••••••" autocomplete="new-password" />
+    <p class="hint">At least 8 characters.</p>
+    <button type="submit">Create account</button>
   </form>
-  <p class="alt">Don't have an account? <a href="/signup">Sign up</a></p>
+  <p class="alt">Already have an account? <a href="/login">Log in</a></p>
 <script>
   // UI only for now, no auth wired up yet.
-  document.getElementById('loginForm').addEventListener('submit', (e) => {
+  document.getElementById('signupForm').addEventListener('submit', (e) => {
     e.preventDefault();
   });
 </script>
