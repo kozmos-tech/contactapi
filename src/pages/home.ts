@@ -212,7 +212,7 @@ ${analyticsScript}
     <li><a href="/blog/manage-newsletter-subscribers-rest-api">Manage newsletter subscribers</a></li>
   </ul>
 
-  <footer>Open source · MIT licensed · <a href="https://github.com/kozmos-tech/contactapi">GitHub</a></footer>
+  <footer>Open source · MIT licensed · <a href="https://github.com/kozmos-tech/contactapi">GitHub</a> · <a href="https://kozmos.tech">kozmos.tech</a> · <a href="mailto:meduard.krasniqi@kozmos.tech">meduard.krasniqi@kozmos.tech</a></footer>
 
   <dialog id="auth-modal">
     <div class="modal-head">
