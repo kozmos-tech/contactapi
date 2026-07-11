@@ -1,84 +1,95 @@
-import { baseStyle, analyticsScript } from '../styles.js'
+import { baseStyle, analyticsScript, fontLinks, brandMark } from '../styles.js'
 
-export const homePage = /* html */ `<!doctype html>
+export function homePage(loggedIn = false): string {
+  const cta = loggedIn
+    ? /* html */ `<a class="btn" href="/dashboard">Dashboard</a>`
+    : /* html */ `<a class="btn" href="/login">Get API key</a>`
+  return /* html */ `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+<link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
 <title>ContactAPI, an open-source API to save contacts</title>
 <meta name="description" content="An open-source API to save contacts with a single POST and manage them with simple CRUD." />
+${fontLinks}
 <style>
   ${baseStyle}
   .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .btn {
-    display: inline-block;
-    padding: 9px 16px;
-    font-size: 14px;
-    background: #1a1a1a;
-    color: #fff;
-    border-radius: 6px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .btn:hover { background: #333; }
-  .cta { display: flex; align-items: center; gap: 14px; }
-  .cta a.txt, .cta button.txt { font-size: 15px; color: #666; white-space: nowrap; }
+  .cta { display: flex; align-items: center; gap: 20px; }
+  .cta a.txt, .cta button.txt { font-size: 14px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  .cta a.txt:hover, .cta button.txt:hover { color: var(--ink); text-decoration: none; }
   button.txt { background: none; border: none; padding: 0; cursor: pointer; font-family: inherit; }
-  button.txt:hover { color: #1a1a1a; }
+
+  .hero { margin: 44px 0 8px; max-width: 640px; }
+  .hero h1 { font-size: 46px; letter-spacing: -.035em; line-height: 1.06; max-width: 19ch; text-wrap: balance; }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--muted); max-width: 42ch; margin-top: 18px; }
 
   .docs-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
   .docs-head h2 { margin-bottom: 0; }
-  .linkbtn { background: none; border: none; padding: 0; font: inherit; font-size: 15px; color: #2563eb; cursor: pointer; white-space: nowrap; }
+  .linkbtn { background: none; border: none; padding: 0; font: inherit; font-size: 14px; font-weight: 600; color: var(--link); cursor: pointer; white-space: nowrap; }
   .linkbtn:hover { text-decoration: underline; }
 
-  .endpoint { border: 1px solid #e5e5e5; border-radius: 8px; margin: 16px 0; overflow: hidden; }
-  .ep-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: #fafafa; cursor: pointer; list-style: none; }
+  .endpoint { border: 1px solid var(--border); border-radius: var(--radius); margin: 14px 0; overflow: hidden; background: var(--bg); transition: box-shadow .15s ease, border-color .15s ease; }
+  .endpoint:hover { border-color: var(--border-2); box-shadow: var(--shadow-sm); }
+  .ep-head { display: flex; align-items: center; gap: 12px; padding: 15px 18px; cursor: pointer; list-style: none; }
   .ep-head::-webkit-details-marker { display: none; }
-  .endpoint[open] .ep-head { border-bottom: 1px solid #eee; }
-  .method { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: .4px; padding: 4px 8px; border-radius: 4px; color: #fff; }
-  .method.post { background: #16a34a; }
-  .method.get { background: #2563eb; }
-  .method.patch { background: #d97706; }
-  .method.delete { background: #dc2626; }
-  .path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; }
-  .keytag { margin-left: auto; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ddd; color: #666; background: #fff; white-space: nowrap; }
-  .ep-body { padding: 14px; }
-  .ep-desc { margin: 0 0 14px; font-size: 14px; color: #444; }
-  .label { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #999; margin: 0 0 6px; }
-  table.params { width: 100%; border-collapse: collapse; font-size: 13px; margin: 0 0 14px; }
-  table.params td { padding: 6px 10px 6px 0; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-  table.params td:first-child { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
-  .req { color: #dc2626; font-size: 12px; }
-  .opt { color: #999; font-size: 12px; }
-  .uses { padding-left: 20px; margin: 0 0 16px; }
-  .uses li { margin: 0 0 6px; }
+  .endpoint[open] .ep-head { border-bottom: 1px solid var(--border); }
+  .method { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: .4px; padding: 4px 9px; border-radius: 999px; }
+  .method.post { background: var(--brand-tint); color: var(--link); }
+  .method.get { background: #eaf1fe; color: #2563eb; }
+  .method.patch { background: #fdf2e3; color: #b7791f; }
+  .method.delete { background: #fdecec; color: #d64545; }
+  .path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: var(--ink); }
+  .keytag { margin-left: auto; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); background: var(--panel); white-space: nowrap; }
+  .ep-body { padding: 18px; }
+  .ep-desc { margin: 0 0 14px; font-size: 14px; color: var(--text); }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; font-weight: 700; color: var(--faint); margin: 0 0 7px; }
+  table.params { width: 100%; border-collapse: collapse; font-size: 13px; margin: 0 0 16px; }
+  table.params td { padding: 7px 10px 7px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+  table.params td:first-child { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; color: var(--ink); }
+  .req { color: #d64545; font-size: 12px; }
+  .opt { color: var(--faint); font-size: 12px; }
+  .uses { list-style: none; padding: 0; margin: 8px 0 16px; }
+  .uses li { margin: 0; }
+  .uses a { display: flex; align-items: center; gap: 10px; padding: 13px 4px; border-bottom: 1px solid var(--border); color: var(--ink); font-weight: 500; }
+  .uses a:hover { text-decoration: none; color: var(--link); }
+  .uses a::after { content: "→"; margin-left: auto; color: var(--faint); font-weight: 600; transition: transform .12s ease, color .12s ease; }
+  .uses a:hover::after { transform: translateX(3px); color: var(--link); }
+  .uses li:last-child a { border-bottom: 0; }
 
-  dialog { border: none; border-radius: 10px; padding: 0; max-width: 560px; width: calc(100% - 32px); color: #1a1a1a; box-shadow: 0 12px 44px rgba(0, 0, 0, .18); }
-  dialog::backdrop { background: rgba(0, 0, 0, .4); }
-  .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; border-bottom: 1px solid #eee; }
+  dialog { border: none; border-radius: var(--radius); padding: 0; max-width: 560px; width: calc(100% - 32px); color: var(--text); box-shadow: 0 20px 60px rgba(17, 18, 20, .22); }
+  dialog::backdrop { background: rgba(17, 18, 20, .38); backdrop-filter: blur(2px); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid var(--border); }
   .modal-head h2 { margin: 0; font-size: 18px; }
-  .modal-close { background: none; border: none; font-size: 22px; line-height: 1; color: #999; cursor: pointer; }
-  .modal-close:hover { color: #1a1a1a; }
-  .modal-body { padding: 20px; }
+  .modal-close { background: none; border: none; font-size: 24px; line-height: 1; color: var(--faint); cursor: pointer; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 22px; }
   .modal-body > :first-child { margin-top: 0; }
   .modal-body h2 { margin-top: 24px; font-size: 15px; }
 
-  footer { margin-top: 56px; font-size: 13px; color: #888; }
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--ink); }
 </style>
 ${analyticsScript}
 </head>
 <body>
   <div class="topbar">
-    <h1>ContactAPI</h1>
+    ${brandMark}
     <div class="cta">
       <button type="button" class="txt" data-modal="mcp-modal">MCP</button>
       <a class="txt" href="/blog">Blog</a>
       <a class="txt" href="/llms.txt">llms.txt</a>
-      <a class="btn" href="/login">Get API key</a>
+      ${cta}
     </div>
   </div>
-  <p class="muted" style="margin-top:8px">An open-source API to save contacts. Send a POST with an email and any other fields you want, and they get saved as-is.</p>
+  <div class="hero">
+    <h1>Save a contact with a single POST.</h1>
+    <p class="lede">An open-source API to save contacts. Send a POST with an email and any other fields you want, and they get saved as-is.</p>
+  </div>
 
   <div class="docs-head">
     <h2>Endpoints</h2>
@@ -269,3 +280,4 @@ ${analyticsScript}
   </script>
 </body>
 </html>`
+}

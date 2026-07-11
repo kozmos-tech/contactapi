@@ -29,7 +29,10 @@ app.use(
 )
 
 // Marketing / docs pages
-app.get('/', (c) => c.html(homePage))
+app.get('/', async (c) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers })
+  return c.html(homePage(!!session))
+})
 app.get('/login', (c) => c.html(loginPage))
 app.get('/signup', (c) => c.html(signupPage))
 app.get('/blog', (c) => c.html(blogIndexPage()))

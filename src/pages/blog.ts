@@ -50,7 +50,9 @@ function layout(opts: { title: string; description: string; canonical: string; b
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+<link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
 <title>${esc(opts.title)}</title>
 <meta name="description" content="${esc(opts.description)}" />
 <link rel="canonical" href="${esc(opts.canonical)}" />
