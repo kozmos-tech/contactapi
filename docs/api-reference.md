@@ -48,7 +48,7 @@ List your contacts, sorted by `created_at`, newest first. Requires a secret key.
 Query parameters:
 
 - `page` (integer, optional) — which page to return, starting at 1. Defaults to 1.
-- `page_size` (integer, optional) — how many contacts per page, 1–100. Defaults to 20.
+- `page_size` (integer, optional) — how many contacts per page, 1–100. Defaults to 50.
 
 ```bash
 curl "https://contactapi.dev/v1/contacts?page=1&page_size=20" \
